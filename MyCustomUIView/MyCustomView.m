@@ -12,7 +12,7 @@
 #define PI M_PI //圆周率常量
 #define RADIAN 180/M_PI
 
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0f green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.0f]
 
 @interface MyCustomView ()
 {
@@ -29,6 +29,10 @@
     NSTimer *timer;
     
     float scrollDamp;
+    
+    float preProgressBarRadianY;
+    float startRadian;
+    float endRadian;
 }
 
 
@@ -84,8 +88,8 @@
 //
 //
 //
-@property (nonatomic,assign) CGPoint progressBarAngle;
-@property (nonatomic,assign) CGPoint indicateBarAngle;
+@property (nonatomic,assign) CGPoint progressBarRadian;
+@property (nonatomic,assign) CGPoint indicateBarRadian;
 
 //画弧线方向，为0表示顺时针，为1表示逆时针，默认值为0.
 //方向不同，画出的弧线也会不同，例如：
@@ -110,13 +114,13 @@
 }
 
 -(void)setProgressPrecent:(float)progress {
-    if (progress > 100) {
+    if (progress > 100.0f) {
         progress = 100.0f;
     }
-    if (progress < 0) {
+    if (progress < 0.0f) {
         progress = 0.0f;
     }
-    _progressBarAngle.y += (progress / 100 * 360) * PI / 180;
+    _progressBarRadian.y += (progress / 100 * 360.0f) * PI / 180.0f;
     
 }
 
@@ -141,7 +145,7 @@
 }
 -(void)getDownAngleX: (float) x Y:(float) y {
     float cos = [self computeCosX:x Y:y];
-    if (x < self.frame.size.width / 2) {
+    if (x < self.frame.size.width / 2.0f) {
         downAngle = M_PI * RADIAN + acos(cos) * RADIAN;
     } else {
         downAngle = M_PI * RADIAN - acos(cos) * RADIAN;
@@ -151,8 +155,8 @@
     
 }
 -(float)computeCosX: (float) x Y:(float) y{
-    float width = x - self.frame.size.width / 2;
-    float height = y - self.frame.size.height / 2;
+    float width = x - self.frame.size.width / 2.0f;
+    float height = y - self.frame.size.height / 2.0f;
     float slope = sqrt(width * width + height * height);
     return height / slope;
 }
@@ -166,14 +170,14 @@
     float x1 = point.x;
     float y1 = point.y;
     [self getAngleX:x1 Y:y1];
-    
+    [self sendProgressTouchMoved];
     [self setNeedsDisplay];
     
 }
 
 -(void)getAngleX: (float) x Y:(float) y {
     float cos = [self computeCosX:x Y:y];
-    if (x < self.frame.size.width / 2) {
+    if (x < self.frame.size.width / 2.0f) {
         angle = M_PI * RADIAN + acos(cos) * RADIAN;
     } else {
         angle = M_PI * RADIAN - acos(cos) * RADIAN;
@@ -194,30 +198,38 @@
     
     //角度计算
     float ix = angle - 35.0f;
-    float newIX = (ix < 0)?360-fabsf(ix):ix;
+    float newIX = (ix < 0)?360.0f-fabsf(ix):ix;
     
     float indicateAngleX = newIX;
     
     float iy =angle + 35.0f;
-    float newIY = iy > 360.0f?iy - 360:iy;
+    float newIY = iy > 360.0f?iy - 360.0f:iy;
     float indicateAngleY = newIY;
     
     
-    _indicateBarAngle.x = (indicateAngleX / 180.0f + 1.5) * PI;
-    _indicateBarAngle.y = (indicateAngleY / 180.0f + 1.5) * PI;
+    _indicateBarRadian.x = (indicateAngleX / 180.0f + 1.5f) * PI;
+    _indicateBarRadian.y = (indicateAngleY / 180.0f + 1.5f) * PI;
     
     
     float tmpAngle = (angle - preAngle) * scrollDamp;
     
-    _progressBarAngle.y += (tmpAngle) * PI / 180;
+    _progressBarRadian.y += (tmpAngle) / 180.0f * PI ;
     
-    if (_progressBarAngle.y < -90 * PI / 180){
-        _progressBarAngle.y =-90 * PI / 180;
+    if (_progressBarRadian.y < startRadian ){
+        _progressBarRadian.y =startRadian ;
     }
-    if (_progressBarAngle.y > 270*PI/180){
-        _progressBarAngle.y = 269.9999*PI/180;
+    if (_progressBarRadian.y > endRadian){
+        _progressBarRadian.y = endRadian;
     }
-    
+    if (isnan(_progressBarRadian.y)){
+        NSLog(@"angle y is nan");
+        
+//        _progressBarAngle.y = -0.5f * PI;
+        _progressBarRadian.y = preProgressBarRadianY;
+    } else {
+        preProgressBarRadianY = _progressBarRadian.y;
+    }
+//    NSLog(@"angle y: %f", _progressBarAngle.y);
 }
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 //    NSLog(@"touchesEnded");
@@ -227,16 +239,30 @@
     touchDown = false;
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(delayMethod) userInfo:nil repeats:NO];
     
-    if ([self.delegate respondsToSelector:@selector(progressUpdate:)]) {
-        float progressPrecent = (_progressBarAngle.y * 180 / PI + 90);
-        if (progressPrecent > 359.8){
-            progressPrecent = 360;
-        }
-        [self.delegate progressUpdate:progressPrecent / 360 *100];
-    }
     
-    
+    [self sendProgressTouchEnded];
     [self setNeedsDisplay];
+    
+}
+
+-(void)sendProgressTouchEnded{
+    if ([self.delegate respondsToSelector:@selector(progressTouchEnded:)]) {
+        float progressPrecent = (_progressBarRadian.y * 180.0f / PI + 90.0f);
+        if (progressPrecent > 359.8f){
+            progressPrecent = 360.0f;
+        }
+        [self.delegate progressTouchEnded:progressPrecent / 360.0f *100.0f];
+    }
+
+}
+-(void)sendProgressTouchMoved{
+    if ([self.delegate respondsToSelector:@selector(progressTouchMoved:)]) {
+        float progressPrecent = (_progressBarRadian.y * 180.0f / PI + 90.0f);
+        if (progressPrecent > 359.8f){
+            progressPrecent = 360.0f;
+        }
+        [self.delegate progressTouchMoved:progressPrecent / 360.0f *100.0f];
+    }
     
 }
 
@@ -272,16 +298,16 @@
     
     self = [super initWithFrame:frame];
     //圆心坐标点
-    _myDot.x =self.frame.size.width/2;
-    _myDot.y =self.frame.size.height/2;
+    _myDot.x =self.frame.size.width/2.0f;
+    _myDot.y =self.frame.size.height/2.0f;
     //线宽
     _myLineWidth=13;
     
     //圆半径
-    _progressBarRadius=(self.frame.size.width>self.frame.size.height)?(self.frame.size.height/2-10):(self.frame.size.width/2-10);
+    _progressBarRadius=(self.frame.size.width>self.frame.size.height)?(self.frame.size.height/2.0f-10.0f):(self.frame.size.width/2.0f-10.0f);
     _indicateBarRadius=_progressBarRadius - _myLineWidth * 3.0f / 2.0f;
     //弧度
-    _progressBarAngle.y=-0.5 * PI;
+    _progressBarRadian.y=-0.5f * PI;
     //方向
     _myClockWise=0;
     _progressBarColor = UIColorFromRGB(0x01afef);
@@ -296,7 +322,10 @@
     
     self.backgroundColor = UIColorFromRGB(0x5a5d5d);
     
-    scrollDamp = 0.5;
+    scrollDamp = 0.5f;
+    
+    startRadian = -90.0f / 180.0f * PI;
+    endRadian = 270.0f/180.0f*PI;
     
     return self;
     
@@ -307,28 +336,30 @@
     
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetAllowsAntialiasing(context, true);
+    CGContextSetShouldAntialias(context, true);
     //画背景
     CGContextSetFillColorWithColor(context, _indicateBarBackgroundColor.CGColor);
     //    CGContextSetStrokeColorWithColor(context, _indicateBarBackgroundColor.CGColor);
-    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, 0, 2 * PI, _myClockWise);
+    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, 0, 2.0f * PI, _myClockWise);
     CGContextDrawPath(context, kCGPathFill);
     
     
     if (touchDown){
         CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
         //    CGContextSetStrokeColorWithColor(context, _indicateBarBackgroundColor.CGColor);
-        CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius - _myLineWidth * 3 + _myLineWidth / 2, 0, 2 * PI, _myClockWise);
+        CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius - _myLineWidth * 3.0f + _myLineWidth / 2.0f, 0, 2.0f * PI, _myClockWise);
         CGContextDrawPath(context, kCGPathFill);
     }
     
     CGContextSetStrokeColorWithColor(context, _progressBarBackgroundColor.CGColor);
     CGContextSetLineWidth(context, _myLineWidth);//线的宽度
-    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, 0, 2 * PI, _myClockWise);
+    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, 0, 2.0f * PI, _myClockWise);
     CGContextDrawPath(context, kCGPathStroke); //绘制路径
     //画弧线
     CGContextSetStrokeColorWithColor(context, _progressBarColor.CGColor);
     CGContextSetLineWidth(context, _myLineWidth);//线的宽度
-    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, -0.5 * PI, _progressBarAngle.y, _myClockWise);
+    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, -0.5f * PI, _progressBarRadian.y, _myClockWise);
     CGContextDrawPath(context, kCGPathStroke); //绘制路径
     
     
@@ -343,8 +374,8 @@
         } else {
             CGContextSetStrokeColorWithColor(context, _progressBarBackgroundColor.CGColor);
         }
-        CGContextSetLineWidth(context, _myLineWidth * 2);//线的宽度
-        CGContextAddArc(context, _myDot.x, _myDot.y, _indicateBarRadius, _indicateBarAngle.x, _indicateBarAngle.y, _myClockWise);
+        CGContextSetLineWidth(context, _myLineWidth * 2.0f);//线的宽度
+        CGContextAddArc(context, _myDot.x, _myDot.y, _indicateBarRadius, _indicateBarRadian.x, _indicateBarRadian.y, _myClockWise);
         CGContextDrawPath(context, kCGPathStroke); //绘制路径
     }
     

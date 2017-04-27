@@ -15,8 +15,13 @@
 
 @implementation ViewController
 
--(void)progressUpdate:(float)progressPrecent {
-    NSLog(@"progress update: %f", progressPrecent);
+-(void)progressTouchEnded:(float)progressPrecent {
+//    NSLog(@"progressTouchEnded: %f", progressPrecent);
+}
+
+-(void)progressTouchMoved:(float)progressPrecent {
+//    NSLog(@"progressTouchMoved: %f", progressPrecent);
+
 }
 
 - (void)viewDidLoad {
