@@ -27,6 +27,8 @@
     Boolean touchDown;
     Boolean drawindicateBar;
     NSTimer *timer;
+    
+    float scrollDamp;
 }
 
 
@@ -96,6 +98,16 @@
 
 
 @implementation MyCustomView
+
+-(void)setDamp:(float)damp {
+    if (damp < 0) {
+        damp = 0;
+    }
+    if (damp > 1) {
+        damp = 1;
+    }
+    scrollDamp = damp;
+}
 
 -(void)setProgressPrecent:(float)progress {
     if (progress > 100) {
@@ -195,7 +207,7 @@
     _indicateBarAngle.y = (indicateAngleY / 180.0f + 1.5) * PI;
     
     
-    float tmpAngle = (angle - preAngle) * 0.7;
+    float tmpAngle = (angle - preAngle) * scrollDamp;
     
     _progressBarAngle.y += (tmpAngle) * PI / 180;
     
@@ -283,6 +295,8 @@
     _middleCircleColor = UIColorFromRGB(0x565959);
     
     self.backgroundColor = UIColorFromRGB(0x5a5d5d);
+    
+    scrollDamp = 0.5;
     
     return self;
     

@@ -18,6 +18,7 @@
 //@property (nonatomic, assign) float progress;
 
 -(void)setProgressPrecent:(float) progress;
+-(void)setDamp: (float) damp;
 @property (nonatomic, weak) id<ProgressUpdateProtocol> delegate;
 @end
 
