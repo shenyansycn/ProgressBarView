@@ -31,8 +31,6 @@
     float scrollDamp;
     
     float preProgressBarRadianY;
-    float startRadian;
-    float endRadian;
 }
 
 
@@ -215,21 +213,18 @@
     
     _progressBarRadian.y += (tmpAngle) / 180.0f * PI ;
     
-    if (_progressBarRadian.y < startRadian ){
-        _progressBarRadian.y =startRadian ;
+    if (_progressBarRadian.y < (-90.0f/180.0f*PI) ){
+        _progressBarRadian.y =(-90.0f/180.0f*PI) ;
     }
-    if (_progressBarRadian.y > endRadian){
-        _progressBarRadian.y = endRadian;
+    if (_progressBarRadian.y > 270.0f / 180.0f * PI){
+        _progressBarRadian.y = 269.99f / 180.0f * PI;
     }
     if (isnan(_progressBarRadian.y)){
         NSLog(@"angle y is nan");
-        
-//        _progressBarAngle.y = -0.5f * PI;
         _progressBarRadian.y = preProgressBarRadianY;
     } else {
         preProgressBarRadianY = _progressBarRadian.y;
     }
-//    NSLog(@"angle y: %f", _progressBarAngle.y);
 }
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 //    NSLog(@"touchesEnded");
@@ -323,9 +318,7 @@
     self.backgroundColor = UIColorFromRGB(0x5a5d5d);
     
     scrollDamp = 0.5f;
-    
-    startRadian = -90.0f / 180.0f * PI;
-    endRadian = 270.0f/180.0f*PI;
+
     
     return self;
     
