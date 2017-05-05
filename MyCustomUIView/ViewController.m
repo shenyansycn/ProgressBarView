@@ -45,7 +45,7 @@
 
     MyCustomView * cvCircle = [[MyCustomView alloc] initWithFrame:CGRectMake(x, y, width, height)];
 
-    [cvCircle setProgressPrecent:25];
+//    [cvCircle setProgressPrecent:30];
     [cvCircle setDamp:0.5];
     cvCircle.isCanTouch = true;
     cvCircle.delegate = self;
