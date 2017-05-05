@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 #import "MyCustomView.h"
+#import "CodeLayoutViewController.h"
+#import "XibLayoutViewController.h"
+
 
 @interface ViewController ()
 
@@ -27,40 +30,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-     [self _drawCircle];
+    
     
     
 }
 
-- (void)_drawCircle {
-    
-
-    int x = self.view.frame.size.width * 1 / 8;
-    
-    
-    int width = self.view.frame.size.width * 3 /4;
-    int y = (self.view.frame.size.height - width) / 2;
-    int height = width;
-    
-
-    MyCustomView * cvCircle = [[MyCustomView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-
-//    [cvCircle setProgressPrecent:30];
-    [cvCircle setDamp:0.5];
-    cvCircle.isCanTouch = true;
-    cvCircle.delegate = self;
-    
-    
-// 
-
-    //add subview
-    [self.view addSubview:cvCircle];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)codeLayoutBtnClick:(UIButton *)sender {
+    CodeLayoutViewController *vc = [[CodeLayoutViewController alloc] initWithNibName:@"CodeLayoutViewController" bundle:nil];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+- (IBAction)xibLayoutBtnClick:(UIButton *)sender {
+    XibLayoutViewController *vc = [[XibLayoutViewController alloc] initWithNibName:@"XibLayoutViewController" bundle:nil];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 
 
 @end

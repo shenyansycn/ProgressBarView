@@ -112,7 +112,7 @@
 }
 
 -(void)setProgressPrecent:(float)progress {
-//    NSLog(@"setProgressPrecent");
+    //    NSLog(@"setProgressPrecent");
     if (progress > 100.0f) {
         progress = 100.0f;
     }
@@ -220,12 +220,12 @@
     
     _progressBarRadian.y += (tmpAngle) / 180.0f * PI ;
     
-//    if (_progressBarRadian.y < (-90.0f/180.0f*PI) ){
-//        _progressBarRadian.y =(-90.0f/180.0f*PI) ;
-//    }
-//    if (_progressBarRadian.y > 270.0f / 180.0f * PI){
-//        _progressBarRadian.y = 269.99f / 180.0f * PI;
-//    }
+    //    if (_progressBarRadian.y < (-90.0f/180.0f*PI) ){
+    //        _progressBarRadian.y =(-90.0f/180.0f*PI) ;
+    //    }
+    //    if (_progressBarRadian.y > 270.0f / 180.0f * PI){
+    //        _progressBarRadian.y = 269.99f / 180.0f * PI;
+    //    }
     
     if (_progressBarRadian.y < (0.0f) ){
         _progressBarRadian.y =(0.0f) ;
@@ -299,27 +299,32 @@
 }
 #pragma mark --------------->系统方法区<---------------
 -(instancetype)init{
-//    NSLog(@"init");
+    //    NSLog(@"init");
     self=[super init];
     if(self){
-        
+        [self initView];
     }
     return self;
 }
 
 -(instancetype) initWithFrame:(CGRect)frame {
-//    NSLog(@"initWithFrame");
+    //    NSLog(@"initWithFrame");
     
     self = [super initWithFrame:frame];
-    
+    if (self){
+        [self initView];
+    }
     return self;
     
 }
-
--(void)layoutSubviews{
-//    NSLog(@"layoutSubviews");
-    [self initView];
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self){
+        [self initView];
+    }
+    return self;
 }
+
 -(void) initView{
     //圆心坐标点
     _myDot.x =self.frame.size.width/2.0f;
@@ -331,10 +336,10 @@
     _progressBarRadius=(self.frame.size.width>self.frame.size.height)?(self.frame.size.height/2.0f-10.0f):(self.frame.size.width/2.0f-10.0f);
     _indicateBarRadius=_progressBarRadius - _myLineWidth * 3.0f / 2.0f;
     //弧度
-//    _progressBarRadian.y=-0.5f * PI;
-//    if (_progressBarRadian.y == 0){
-//        _progressBarRadian.y = -0.5f * PI;
-//    }
+    //    _progressBarRadian.y=-0.5f * PI;
+    //    if (_progressBarRadian.y == 0){
+    //        _progressBarRadian.y = -0.5f * PI;
+    //    }
     //方向
     _myClockWise=0;
     _progressBarColor = UIColorFromRGB(0x01afef);
@@ -356,7 +361,7 @@
 }
 
 -(void)drawRect:(CGRect)rect {
-//    NSLog(@"drawRect %f", _progressBarRadian.y);
+    //    NSLog(@"drawRect %f", _progressBarRadian.y);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetAllowsAntialiasing(context, true);

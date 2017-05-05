@@ -20,12 +20,39 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-Lq-ydU">
+                                <rect key="frame" x="156.5" y="37" width="62" height="30"/>
+                                <state key="normal" title="代码布局">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="codeLayoutBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WYo-Wm-UOF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JV4-sX-cu3">
+                                <rect key="frame" x="162" y="84" width="51" height="30"/>
+                                <state key="normal" title="xib布局">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="xibLayoutBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zcy-P9-jZy"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ce6-Lq-ydU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="8Zi-lJ-ci4"/>
+                            <constraint firstItem="JV4-sX-cu3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RRm-GF-NC6"/>
+                            <constraint firstItem="ce6-Lq-ydU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vTR-8Y-mYQ"/>
+                            <constraint firstItem="JV4-sX-cu3" firstAttribute="top" secondItem="ce6-Lq-ydU" secondAttribute="bottom" constant="17" id="xby-Pw-t0u"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="38.23088455772114"/>
         </scene>
     </scenes>
 </document>

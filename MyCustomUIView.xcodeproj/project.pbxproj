@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A65FFF651EBCD2D200BDB75E /* CodeLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A65FFF631EBCD2D200BDB75E /* CodeLayoutViewController.m */; };
+		A65FFF661EBCD2D200BDB75E /* CodeLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A65FFF641EBCD2D200BDB75E /* CodeLayoutViewController.xib */; };
+		A65FFF6A1EBCD2E200BDB75E /* XibLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A65FFF681EBCD2E200BDB75E /* XibLayoutViewController.m */; };
+		A65FFF6B1EBCD2E200BDB75E /* XibLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A65FFF691EBCD2E200BDB75E /* XibLayoutViewController.xib */; };
 		A6B472591EAEEEA900E10431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6B472581EAEEEA900E10431 /* main.m */; };
 		A6B4725C1EAEEEA900E10431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6B4725B1EAEEEA900E10431 /* AppDelegate.m */; };
 		A6B4725F1EAEEEA900E10431 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6B4725E1EAEEEA900E10431 /* ViewController.m */; };
@@ -36,6 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A65FFF621EBCD2D200BDB75E /* CodeLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeLayoutViewController.h; sourceTree = "<group>"; };
+		A65FFF631EBCD2D200BDB75E /* CodeLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeLayoutViewController.m; sourceTree = "<group>"; };
+		A65FFF641EBCD2D200BDB75E /* CodeLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CodeLayoutViewController.xib; sourceTree = "<group>"; };
+		A65FFF671EBCD2E200BDB75E /* XibLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XibLayoutViewController.h; sourceTree = "<group>"; };
+		A65FFF681EBCD2E200BDB75E /* XibLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XibLayoutViewController.m; sourceTree = "<group>"; };
+		A65FFF691EBCD2E200BDB75E /* XibLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XibLayoutViewController.xib; sourceTree = "<group>"; };
 		A69E97AA1EB1FC3000CF6BE0 /* ProgressUPdateProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressUPdateProtocol.h; sourceTree = "<group>"; };
 		A6B472541EAEEEA800E10431 /* MyCustomUIView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCustomUIView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B472581EAEEEA900E10431 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,6 +127,12 @@
 				A6B4728A1EAEFA6800E10431 /* MyCustomView.h */,
 				A6B4728B1EAEFA6800E10431 /* MyCustomView.m */,
 				A69E97AA1EB1FC3000CF6BE0 /* ProgressUPdateProtocol.h */,
+				A65FFF621EBCD2D200BDB75E /* CodeLayoutViewController.h */,
+				A65FFF631EBCD2D200BDB75E /* CodeLayoutViewController.m */,
+				A65FFF641EBCD2D200BDB75E /* CodeLayoutViewController.xib */,
+				A65FFF671EBCD2E200BDB75E /* XibLayoutViewController.h */,
+				A65FFF681EBCD2E200BDB75E /* XibLayoutViewController.m */,
+				A65FFF691EBCD2E200BDB75E /* XibLayoutViewController.xib */,
 			);
 			path = MyCustomUIView;
 			sourceTree = "<group>";
@@ -257,6 +273,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6B472671EAEEEA900E10431 /* LaunchScreen.storyboard in Resources */,
+				A65FFF6B1EBCD2E200BDB75E /* XibLayoutViewController.xib in Resources */,
+				A65FFF661EBCD2D200BDB75E /* CodeLayoutViewController.xib in Resources */,
 				A6B472641EAEEEA900E10431 /* Assets.xcassets in Resources */,
 				A6B472621EAEEEA900E10431 /* Main.storyboard in Resources */,
 			);
@@ -284,8 +302,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6B4725F1EAEEEA900E10431 /* ViewController.m in Sources */,
+				A65FFF651EBCD2D200BDB75E /* CodeLayoutViewController.m in Sources */,
 				A6B4728C1EAEFA6800E10431 /* MyCustomView.m in Sources */,
 				A6B4725C1EAEEEA900E10431 /* AppDelegate.m in Sources */,
+				A65FFF6A1EBCD2E200BDB75E /* XibLayoutViewController.m in Sources */,
 				A6B472591EAEEEA900E10431 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
