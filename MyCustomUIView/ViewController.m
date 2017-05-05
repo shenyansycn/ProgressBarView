@@ -47,6 +47,7 @@
 
     [cvCircle setProgressPrecent:25];
     [cvCircle setDamp:0.5];
+    cvCircle.isCanTouch = true;
     cvCircle.delegate = self;
     
     

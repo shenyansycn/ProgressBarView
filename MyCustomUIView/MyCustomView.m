@@ -123,7 +123,10 @@
 }
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    NSLog(@"touchesBegan");
+    if (!_isCanTouch){
+        return;
+    }
+    //    NSLog(@"touchesBegan");
     [timer invalidate];
     angleY = 0.0f;
     NSSet *allTouches = [event allTouches];    //返回与当前接收者有关的所有的触摸对象
@@ -160,7 +163,9 @@
 }
 
 -(void) touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
+    if (!_isCanTouch){
+        return;
+    }
     
     NSSet *allTouches = [event allTouches];    //返回与当前接收者有关的所有的触摸对象
     UITouch *touch = [allTouches anyObject];   //视图中的所有对象
@@ -227,8 +232,10 @@
     }
 }
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    NSLog(@"touchesEnded");
-    
+    //    NSLog(@"touchesEnded");
+    if (!_isCanTouch){
+        return;
+    }
     isShowIndicateBar = false;
     
     touchDown = false;
@@ -248,7 +255,7 @@
         }
         [self.delegate progressTouchEnded:progressPrecent / 360.0f *100.0f];
     }
-
+    
 }
 -(void)sendProgressTouchMoved{
     if ([self.delegate respondsToSelector:@selector(progressTouchMoved:)]) {
@@ -262,23 +269,23 @@
 }
 
 -(void)delayMethod{
-//    NSLog(@"delayMethodEnd");
+    //    NSLog(@"delayMethodEnd");
     drawindicateBar = false;
     [self setNeedsDisplay];
 }
 -(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    NSLog(@"touchesCancelled");
+    //    NSLog(@"touchesCancelled");
 }
 -(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-//    NSLog(@"motionBegan");
+    //    NSLog(@"motionBegan");
 }
 
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-//    NSLog(@"motionEnded");
+    //    NSLog(@"motionEnded");
 }
 
 -(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-//    NSLog(@"motionCancelled");
+    //    NSLog(@"motionCancelled");
 }
 #pragma mark --------------->系统方法区<---------------
 -(instancetype)init{
@@ -318,7 +325,8 @@
     self.backgroundColor = UIColorFromRGB(0x5a5d5d);
     
     scrollDamp = 0.5f;
-
+    
+    _isCanTouch = true;
     
     return self;
     
@@ -349,6 +357,7 @@
     CGContextSetLineWidth(context, _myLineWidth);//线的宽度
     CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius, 0, 2.0f * PI, _myClockWise);
     CGContextDrawPath(context, kCGPathStroke); //绘制路径
+    
     //画弧线
     CGContextSetStrokeColorWithColor(context, _progressBarColor.CGColor);
     CGContextSetLineWidth(context, _myLineWidth);//线的宽度
@@ -375,7 +384,7 @@
     //    CGContextSetStrokeColorWithColor(context, _middleCircleColor.CGColor);
     //    CGContextAddArc(context, _myDot.x, _myDot.y, _progressBarRadius - _myLineWidth, 0, 2 * PI, _myClockWise);
     //    CGContextDrawPath(context, kCGPathFill);
-    //    
+    //
 }
 
 

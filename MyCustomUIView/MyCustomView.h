@@ -17,8 +17,11 @@
 //0-100
 //@property (nonatomic, assign) float progress;
 
+@property (nonatomic) Boolean isCanTouch;
+
 -(void)setProgressPrecent:(float) progress;
 -(void)setDamp: (float) damp;
+
 @property (nonatomic, weak) id<ProgressUpdateProtocol> delegate;
 @end
 
