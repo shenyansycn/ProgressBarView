@@ -7,8 +7,10 @@
 //
 
 #import "XibLayoutViewController.h"
+#import "MyCustomView.h"
 
 @interface XibLayoutViewController ()
+@property (weak, nonatomic) IBOutlet MyCustomView *myCustomView;
 
 @end
 
@@ -22,6 +24,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [_myCustomView setProgressPrecent:30];
+    [_myCustomView setDamp:0.8f];
     // Do any additional setup after loading the view from its nib.
 }
 
