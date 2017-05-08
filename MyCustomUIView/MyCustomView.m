@@ -31,6 +31,9 @@
     float scrollDamp;
     
     float preProgressBarRadianY;
+    
+    float viewWidth;
+    float viewHeight;
 }
 
 
@@ -112,7 +115,7 @@
 }
 
 -(void)setProgressPrecent:(float)progress {
-        NSLog(@"setProgressPrecent - %f", progress);
+    NSLog(@"setProgressPrecent - %f", progress);
     if (progress > 100.0f) {
         progress = 100.0f;
     }
@@ -121,7 +124,7 @@
     }
     _progressBarRadian.y = (progress / 100.0f * 360.0f) * PI / 180.0f;
     [self setNeedsDisplay];
-//    NSLog(@"setProgressPrecent End %f", _progressBarRadian.y);
+    //    NSLog(@"setProgressPrecent End %f", _progressBarRadian.y);
 }
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -148,7 +151,7 @@
 }
 -(void)getDownAngleX: (float) x Y:(float) y {
     float cos = [self computeCosX:x Y:y];
-    if (x < self.frame.size.width / 2.0f) {
+    if (x < viewWidth / 2.0f) {
         downAngle = M_PI * RADIAN + acos(cos) * RADIAN;
     } else {
         downAngle = M_PI * RADIAN - acos(cos) * RADIAN;
@@ -158,8 +161,8 @@
     
 }
 -(float)computeCosX: (float) x Y:(float) y{
-    float width = x - self.frame.size.width / 2.0f;
-    float height = y - self.frame.size.height / 2.0f;
+    float width = x - viewWidth / 2.0f;
+    float height = y - viewHeight / 2.0f;
     float slope = sqrt(width * width + height * height);
     return height / slope;
 }
@@ -182,7 +185,7 @@
 
 -(void)getAngleX: (float) x Y:(float) y {
     float cos = [self computeCosX:x Y:y];
-    if (x < self.frame.size.width / 2.0f) {
+    if (x < viewWidth / 2.0f) {
         angle = M_PI * RADIAN + acos(cos) * RADIAN;
     } else {
         angle = M_PI * RADIAN - acos(cos) * RADIAN;
@@ -233,7 +236,7 @@
         _progressBarRadian.y = 2.0f * PI;
     }
     
-//    NSLog(@"y = %f", _progressBarRadian.y);
+    //    NSLog(@"y = %f", _progressBarRadian.y);
     if (isnan(_progressBarRadian.y)){
         NSLog(@"angle y is nan");
         _progressBarRadian.y = preProgressBarRadianY;
@@ -324,17 +327,25 @@
     }
     return self;
 }
-
+- (void) layoutSubviews {
+    NSLog(@"layoutSubviews width: %f, height: %f", self.frame.size.width, self.frame.size.height);
+    if (viewWidth != self.frame.size.width || viewHeight != self.frame.size.height){
+        viewWidth = self.frame.size.width;
+        viewHeight = self.frame.size.height;
+        //圆心坐标点
+        _myDot.x =viewWidth/2.0f;
+        _myDot.y =viewHeight/2.0f;
+        //线宽
+        _myLineWidth=13;
+        
+        //圆半径
+        _progressBarRadius=(viewWidth>viewHeight)?(viewHeight/2.0f-10.0f):(viewWidth/2.0f-10.0f);
+        _indicateBarRadius=_progressBarRadius - _myLineWidth * 3.0f / 2.0f;
+    }
+}
 -(void) initView{
-    //圆心坐标点
-    _myDot.x =self.frame.size.width/2.0f;
-    _myDot.y =self.frame.size.height/2.0f;
-    //线宽
-    _myLineWidth=13;
+    //    NSLog(@"init width: %f, height: %f", self.frame.size.width, self.frame.size.height);
     
-    //圆半径
-    _progressBarRadius=(self.frame.size.width>self.frame.size.height)?(self.frame.size.height/2.0f-10.0f):(self.frame.size.width/2.0f-10.0f);
-    _indicateBarRadius=_progressBarRadius - _myLineWidth * 3.0f / 2.0f;
     //弧度
     //    _progressBarRadian.y=-0.5f * PI;
     //    if (_progressBarRadian.y == 0){
@@ -362,6 +373,7 @@
 
 -(void)drawRect:(CGRect)rect {
     //    NSLog(@"drawRect %f", _progressBarRadian.y);
+    NSLog(@"center X: %f, Y: %f",_myDot.x, _myDot.y);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetAllowsAntialiasing(context, true);

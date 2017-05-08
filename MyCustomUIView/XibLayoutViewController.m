@@ -44,6 +44,9 @@
     self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitorVideoPlayback) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
 }
+- (IBAction)backClick:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)monitorVideoPlayback
 {
