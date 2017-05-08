@@ -21,19 +21,21 @@
 @implementation XibLayoutViewController
 
 -(void)progressTouchEnded:(float)progressPrecent {
+    NSLog(@"progressTouchEnded = %f", progressPrecent);
     
 }
 -(void)progressTouchMoved:(float)progressPrecent {
-    
+    NSLog(@"progressTouchMoved = %f" , progressPrecent);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [_myCustomView setProgressPrecent:22.988506];
     [_myCustomView setDamp:0.8f];
+    _myCustomView.delegate = self;
     i = 0.0f;
     
     
-    [self startDurationTimer];
+//    [self startDurationTimer];
     // Do any additional setup after loading the view from its nib.
 }
 

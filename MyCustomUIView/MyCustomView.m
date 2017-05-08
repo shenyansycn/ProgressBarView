@@ -233,7 +233,7 @@
         _progressBarRadian.y = 2.0f * PI;
     }
     
-    
+//    NSLog(@"y = %f", _progressBarRadian.y);
     if (isnan(_progressBarRadian.y)){
         NSLog(@"angle y is nan");
         _progressBarRadian.y = preProgressBarRadianY;
@@ -259,21 +259,21 @@
 
 -(void)sendProgressTouchEnded{
     if ([self.delegate respondsToSelector:@selector(progressTouchEnded:)]) {
-        float progressPrecent = (_progressBarRadian.y * 180.0f / PI + 90.0f);
+        float progressPrecent = (_progressBarRadian.y * 180.0f / PI);
         if (progressPrecent > 359.8f){
             progressPrecent = 360.0f;
         }
-        [self.delegate progressTouchEnded:progressPrecent / 360.0f *100.0f];
+        [self.delegate progressTouchEnded:progressPrecent / 360.0f * 100.0f];
     }
     
 }
 -(void)sendProgressTouchMoved{
     if ([self.delegate respondsToSelector:@selector(progressTouchMoved:)]) {
-        float progressPrecent = (_progressBarRadian.y * 180.0f / PI + 90.0f);
+        float progressPrecent = (_progressBarRadian.y * 180.0f / PI );
         if (progressPrecent > 359.8f){
             progressPrecent = 360.0f;
         }
-        [self.delegate progressTouchMoved:progressPrecent / 360.0f *100.0f];
+        [self.delegate progressTouchMoved:progressPrecent / 360.0f * 100.0f];
     }
     
 }
