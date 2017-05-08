@@ -10,7 +10,11 @@
 #import "MyCustomView.h"
 
 @interface XibLayoutViewController ()
+{
+    float i;
+}
 @property (weak, nonatomic) IBOutlet MyCustomView *myCustomView;
+@property (nonatomic, strong) NSTimer *durationTimer;
 
 @end
 
@@ -24,9 +28,36 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_myCustomView setProgressPrecent:30];
+//    [_myCustomView setProgressPrecent:22.988506];
     [_myCustomView setDamp:0.8f];
+    i = 0.0f;
+    
+    
+    [self startDurationTimer];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)startDurationTimer
+{
+    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitorVideoPlayback) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)monitorVideoPlayback
+{
+    //    double currentTime = floor([SZGVideoPlayerController getInstanceVideoPlayer].currentPlaybackTime);
+    //    double totalTime = floor([SZGVideoPlayerController getInstanceVideoPlayer].duration);
+    //    [self setTimeLabelValues:currentTime totalTime:totalTime];
+    
+    
+    i++;
+    
+    
+    NSLog(@"i--------%f",i);
+    
+    [self.myCustomView setProgressPrecent:i];
+    
+    //    self.videoControl.progressSlider.value = ceil(currentTime);
 }
 
 - (void)didReceiveMemoryWarning {

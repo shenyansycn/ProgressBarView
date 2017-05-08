@@ -112,16 +112,16 @@
 }
 
 -(void)setProgressPrecent:(float)progress {
-    //    NSLog(@"setProgressPrecent");
+        NSLog(@"setProgressPrecent - %f", progress);
     if (progress > 100.0f) {
         progress = 100.0f;
     }
     if (progress < 0.0f) {
         progress = 0.0f;
     }
-    _progressBarRadian.y += (progress / 100 * 360.0f) * PI / 180.0f;
+    _progressBarRadian.y = (progress / 100.0f * 360.0f) * PI / 180.0f;
     [self setNeedsDisplay];
-    NSLog(@"setProgressPrecent End %f", _progressBarRadian.y);
+//    NSLog(@"setProgressPrecent End %f", _progressBarRadian.y);
 }
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
