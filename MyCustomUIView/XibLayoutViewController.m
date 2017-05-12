@@ -11,7 +11,7 @@
 
 @interface XibLayoutViewController ()
 {
-    float i;
+
 }
 @property (weak, nonatomic) IBOutlet MyCustomView *myCustomView;
 @property (nonatomic, strong) NSTimer *durationTimer;
@@ -21,49 +21,27 @@
 @implementation XibLayoutViewController
 
 -(void)progressTouchEnded:(float)progressPrecent {
-    NSLog(@"progressTouchEnded = %f", progressPrecent);
+//    NSLog(@"progressTouchEnded = %f", progressPrecent);
     
 }
 -(void)progressTouchMoved:(float)progressPrecent {
-    NSLog(@"progressTouchMoved = %f" , progressPrecent);
+//    NSLog(@"progressTouchMoved = %f" , progressPrecent);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [_myCustomView setProgressPrecent:22.988506];
     [_myCustomView setDamp:0.8f];
     _myCustomView.delegate = self;
-    i = 0.0f;
-    
-    
-//    [self startDurationTimer];
+    [_myCustomView setProgerssBarWidth:13.0f];
+
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)startDurationTimer
-{
-    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitorVideoPlayback) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
-}
+
 - (IBAction)backClick:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)monitorVideoPlayback
-{
-    //    double currentTime = floor([SZGVideoPlayerController getInstanceVideoPlayer].currentPlaybackTime);
-    //    double totalTime = floor([SZGVideoPlayerController getInstanceVideoPlayer].duration);
-    //    [self setTimeLabelValues:currentTime totalTime:totalTime];
-    
-    
-    i++;
-    
-    
-    NSLog(@"i--------%f",i);
-    
-    [self.myCustomView setProgressPrecent:i];
-    
-    //    self.videoControl.progressSlider.value = ceil(currentTime);
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

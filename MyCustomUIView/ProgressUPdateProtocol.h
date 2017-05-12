@@ -11,7 +11,7 @@
 @protocol ProgressUpdateProtocol <NSObject>
 
 @required
--(void)progressTouchEnded:(float) progressPrecent;
+  -(void)progressTouchEnded:(float) progressPrecent;
 -(void)progressTouchMoved:(float)progressPrecent;
 
 @end

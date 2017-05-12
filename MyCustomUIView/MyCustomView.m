@@ -104,6 +104,10 @@
 
 @implementation MyCustomView
 
+-(void) setProgerssBarWidth:(float)width{
+    self.myLineWidth = width;
+}
+
 -(void)setDamp:(float)damp {
     if (damp < 0) {
         damp = 0;
@@ -315,7 +319,7 @@
     
     self = [super initWithFrame:frame];
     if (self){
-        [self initView];
+        [self initView]; 
     }
     return self;
     
@@ -328,15 +332,14 @@
     return self;
 }
 - (void) layoutSubviews {
-    NSLog(@"layoutSubviews width: %f, height: %f", self.frame.size.width, self.frame.size.height);
+//    NSLog(@"layoutSubviews width: %f, height: %f", self.frame.size.width, self.frame.size.height);
     if (viewWidth != self.frame.size.width || viewHeight != self.frame.size.height){
         viewWidth = self.frame.size.width;
         viewHeight = self.frame.size.height;
         //圆心坐标点
         _myDot.x =viewWidth/2.0f;
         _myDot.y =viewHeight/2.0f;
-        //线宽
-        _myLineWidth=13;
+       
         
         //圆半径
         _progressBarRadius=(viewWidth>viewHeight)?(viewHeight/2.0f-10.0f):(viewWidth/2.0f-10.0f);
@@ -368,12 +371,15 @@
     scrollDamp = 0.5f;
     
     _isCanTouch = true;
+    //线宽
+    _myLineWidth=13;
     [self setNeedsDisplay];
 }
 
 -(void)drawRect:(CGRect)rect {
     //    NSLog(@"drawRect %f", _progressBarRadian.y);
-    NSLog(@"center X: %f, Y: %f",_myDot.x, _myDot.y);
+//    NSLog(@"center X: %f, Y: %f",_myDot.x, _myDot.y);
+//    NSLog(@"width = %f", _myLineWidth);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetAllowsAntialiasing(context, true);

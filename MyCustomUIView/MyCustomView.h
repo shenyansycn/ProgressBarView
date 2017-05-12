@@ -20,6 +20,7 @@
 @property (nonatomic) Boolean isCanTouch;
 
 -(void)setProgressPrecent:(float) progress;
+-(void)setProgerssBarWidth: (float) width;
 -(void)setDamp: (float) damp;
 
 @property (nonatomic, weak) id<ProgressUpdateProtocol> delegate;
